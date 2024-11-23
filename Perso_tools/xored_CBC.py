@@ -53,23 +53,28 @@ def xor(block1, block2):
 def chiffrement(data: bytes):
     iv = IV
     data_encrypt = iv
+    padding = 0
     for i in range(0, len(data), block_len):
         block = data[i:i + block_len]
-
         if len(block) != block_len:
             padding = block_len - len(block)
+            data_padding = chr(padding).encode()
+            print(data_padding)
+            print(ord(data_padding))
             for i in range(padding):
-                block = block + b" "
+                block = block + random.randbytes(1)
         block_xor = xor(block, iv)
         block_encrypt = xor(block_xor, password)
         data_encrypt += block_encrypt
         iv = block_encrypt
-    return data_encrypt
+    return data_encrypt + data_padding
 
 
 def dechiffrement(data_encrypt):
     block_len = 16
     iv = data_encrypt[:block_len]
+    padding = data_encrypt[-1]
+    data_encrypt = data_encrypt[:-1]
     block_encrypt = data_encrypt[block_len:]
     data_decrypt = b""
     for i in range(0, len(block_encrypt), block_len):
@@ -78,7 +83,7 @@ def dechiffrement(data_encrypt):
         block_decrypt = xor(block_xor, iv)
         data_decrypt += block_decrypt
         iv = block
-    return data_decrypt.rstrip()
+    return data_decrypt[:-padding]
 
 
 parser = argparse.ArgumentParser()
