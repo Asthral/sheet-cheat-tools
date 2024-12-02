@@ -1,60 +1,125 @@
-import base64
-import socket
-import re
 import argparse
-import time
+import base64
+import random
+import hashlib
 
-print('''Enter a number between 1-8 :
-[1] Forensic
-[2] Crypto
-[3] Network
-[4] Reverse
-[5] Stegano
-[6] Web
-[7] Osint
-[8] Pwn
-[0] Exit
-''')
-put = int(input("> "))
-
-Forensic_base64 = "X18vXFxcXFxcXFxcXFxcXFxcX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXyAgICAgICAgCiBfXC9cXFwvLy8vLy8vLy8vL19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fICAgICAgIAogIF9cL1xcXF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXy9cXFxfX19fX19fX19fX19fX18gICAgICAKICAgX1wvXFxcXFxcXFxcXFxfX19fX19fX18vXFxcXFxfX19fXy9cXC9cXFxcXFxcX19fX19fL1xcXFxcXFxcX19fL1xcL1xcXFxcXF9fX18vXFxcXFxcXFxcXF9cLy8vX19fX19fL1xcXFxcXFxcXyAgICAgCiAgICBfXC9cXFwvLy8vLy8vX19fX19fX18vXFxcLy8vXFxcX19cL1xcXC8vLy8vXFxcX19fL1xcXC8vLy8vXFxcX1wvXFxcLy8vL1xcXF9fXC9cXFwvLy8vLy9fX18vXFxcX19fL1xcXC8vLy8vL19fICAgIAogICAgIF9cL1xcXF9fX19fX19fX19fX19fL1xcXF9fXC8vXFxcX1wvXFxcX19fXC8vL19fXy9cXFxcXFxcXFxcXF9fXC9cXFxfX1wvL1xcXF9cL1xcXFxcXFxcXFxfXC9cXFxfXy9cXFxfX19fX19fX18gICAKICAgICAgX1wvXFxcX19fX19fX19fX19fX1wvL1xcXF9fL1xcXF9fXC9cXFxfX19fX19fX19cLy9cXC8vLy8vLy9fX19cL1xcXF9fX1wvXFxcX1wvLy8vLy8vL1xcXF9cL1xcXF9cLy9cXFxfX19fX19fXyAgCiAgICAgICBfXC9cXFxfX19fX19fX19fX19fX1wvLy9cXFxcXC9fX19cL1xcXF9fX19fX19fX19cLy9cXFxcXFxcXFxcX1wvXFxcX19fXC9cXFxfXy9cXFxcXFxcXFxcX1wvXFxcX19cLy8vXFxcXFxcXFxfIAogICAgICAgIF9cLy8vX19fX19fX19fX19fX19fX19cLy8vLy9fX19fX1wvLy9fX19fX19fX19fX19cLy8vLy8vLy8vL19fXC8vL19fX19cLy8vX19cLy8vLy8vLy8vL19fXC8vL19fX19fXC8vLy8vLy8vX18="
-Forensic_paylaod = base64.b64decode(Forensic_base64).decode()
-Web_base64 = "X18vXFxcX19fX19fX19fX19fX18vXFxcX19fX19fX19fX19fX19fX18vXFxcX19fX19fX18gICAgICAgIAogX1wvXFxcX19fX19fX19fX19fX1wvXFxcX19fX19fX19fX19fX19fX1wvXFxcX19fX19fX18gICAgICAgCiAgX1wvXFxcX19fX19fX19fX19fX1wvXFxcX19fX19fX19fX19fX19fX1wvXFxcX19fX19fX18gICAgICAKICAgX1wvL1xcXF9fX18vXFxcX19fXy9cXFxfX19fX18vXFxcXFxcXFxfX1wvXFxcX19fX19fX18gICAgIAogICAgX19cLy9cXFxfXy9cXFxcXF9fL1xcXF9fX19fL1xcXC8vLy8vXFxcX1wvXFxcXFxcXFxcX18gICAgCiAgICAgX19fXC8vXFxcL1xcXC9cXFwvXFxcX19fX18vXFxcXFxcXFxcXFxfX1wvXFxcLy8vL1xcXF8gICAKICAgICAgX19fX1wvL1xcXFxcXC8vXFxcXFxfX19fX1wvL1xcLy8vLy8vL19fX1wvXFxcX19cL1xcXF8gIAogICAgICAgX19fX19cLy9cXFxfX1wvL1xcXF9fX19fX19cLy9cXFxcXFxcXFxcX1wvXFxcXFxcXFxcX18gCiAgICAgICAgX19fX19fXC8vL19fX19cLy8vX19fX19fX19fXC8vLy8vLy8vLy9fX1wvLy8vLy8vLy9fX18="
-Web_paylaod = base64.b64decode(base64_base64).decode()
-Pwn_base64 = "X18vXFxcXFxcXFxcXFxcXF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fICAgICAgICAKIF9cL1xcXC8vLy8vLy8vL1xcXF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXyAgICAgICAKICBfXC9cXFxfX19fX19fXC9cXFxfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18gICAgICAKICAgX1wvXFxcXFxcXFxcXFxcXC9fX18vXFxfX19fL1xcX19fL1xcX18vXFwvXFxcXFxcX19fICAgICAKICAgIF9cL1xcXC8vLy8vLy8vL19fX19cL1xcXF9fL1xcXFxfL1xcXF9cL1xcXC8vLy9cXFxfXyAgICAKICAgICBfXC9cXFxfX19fX19fX19fX19fXC8vXFxcL1xcXFxcL1xcXF9fXC9cXFxfX1wvL1xcXF8gICAKICAgICAgX1wvXFxcX19fX19fX19fX19fX19cLy9cXFxcXC9cXFxcXF9fX1wvXFxcX19fXC9cXFxfICAKICAgICAgIF9cL1xcXF9fX19fX19fX19fX19fX1wvL1xcXFwvL1xcXF9fX19cL1xcXF9fX1wvXFxcXyAKICAgICAgICBfXC8vL19fX19fX19fX19fX19fX19fXC8vL19fXC8vL19fX19fXC8vL19fX19cLy8vX18="
-Pwn_paylaod = base64.b64decode(Pwn_base64).decode()
-Stegano_base64 = "X19fX18vXFxcXFxcXFxcXFxfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fICAgICAgICAKIF9fXy9cXFwvLy8vLy8vLy9cXFxfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXyAgICAgICAKICBfX1wvL1xcXF9fX19fX1wvLy9fX19fX18vXFxcX19fX19fX19fX19fX19fX19fX19fX18vXFxcXFxcXFxfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18gICAgICAKICAgX19fXC8vLy9cXFxfX19fX19fX19fL1xcXFxcXFxcXFxcX19fX18vXFxcXFxcXFxfX18vXFxcLy8vL1xcXF9fL1xcXFxcXFxcXF9fX19fL1xcL1xcXFxcXF9fX19fX18vXFxcXFxfX19fICAgICAKICAgIF9fX19fX1wvLy8vXFxcX19fX19fXC8vLy9cXFwvLy8vX19fXy9cXFwvLy8vL1xcXF9cLy9cXFxcXFxcXFxfXC8vLy8vLy8vXFxcX19fXC9cXFwvLy8vXFxcX19fXy9cXFwvLy9cXFxfXyAgICAKICAgICBfX19fX19fX19cLy8vL1xcXF9fX19fX1wvXFxcX19fX19fXy9cXFxcXFxcXFxcXF9fX1wvLy8vLy8vXFxcX19fL1xcXFxcXFxcXFxfX1wvXFxcX19cLy9cXFxfXy9cXFxfX1wvL1xcXF8gICAKICAgICAgX18vXFxcX19fX19fXC8vXFxcX19fX19cL1xcXF8vXFxfX1wvL1xcLy8vLy8vL19fX18vXFxfX19fX1xcXF9fL1xcXC8vLy8vXFxcX19cL1xcXF9fX1wvXFxcX1wvL1xcXF9fL1xcXF9fICAKICAgICAgIF9cLy8vXFxcXFxcXFxcXFwvX19fX19fXC8vXFxcXFxfX19fXC8vXFxcXFxcXFxcXF9cLy9cXFxcXFxcXF9fXC8vXFxcXFxcXFwvXFxfXC9cXFxfX19cL1xcXF9fXC8vL1xcXFxcL19fXyAKICAgICAgICBfX19cLy8vLy8vLy8vLy9fX19fX19fX19cLy8vLy9fX19fX19cLy8vLy8vLy8vL19fX1wvLy8vLy8vL19fX19cLy8vLy8vLy9cLy9fX1wvLy9fX19fXC8vL19fX19fXC8vLy8vX19fX18="
-Stegano_paylaod = base64.b64decode(Stegano_base64).decode()
-Reverse_base64 = "X19fXy9cXFxcXFxcXFxfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fICAgICAgICAKIF9fL1xcXC8vLy8vLy9cXFxfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXyAgICAgICAKICBfXC9cXFxfX19fX1wvXFxcX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18gICAgICAKICAgX1wvXFxcXFxcXFxcXFwvX19fX19fX18vXFxcXFxcXFxfX18vXFxcX19fXy9cXFxfX19fXy9cXFxcXFxcXF9fXy9cXC9cXFxcXFxcX19fL1xcXFxcXFxcXFxfX19fXy9cXFxcXFxcXF9fICAgICAKICAgIF9cL1xcXC8vLy8vL1xcXF9fX19fXy9cXFwvLy8vL1xcXF9cLy9cXFxfXy9cXFxfX19fL1xcXC8vLy8vXFxcX1wvXFxcLy8vLy9cXFxfXC9cXFwvLy8vLy9fX19fL1xcXC8vLy8vXFxcXyAgICAKICAgICBfXC9cXFxfX19fXC8vXFxcX19fXy9cXFxcXFxcXFxcXF9fX1wvL1xcXC9cXFxfX19fL1xcXFxcXFxcXFxcX19cL1xcXF9fX1wvLy9fX1wvXFxcXFxcXFxcXF9fL1xcXFxcXFxcXFxcX18gICAKICAgICAgX1wvXFxcX19fX19cLy9cXFxfX1wvL1xcLy8vLy8vL19fX19fXC8vXFxcXFxfX19fXC8vXFwvLy8vLy8vX19fXC9cXFxfX19fX19fX19cLy8vLy8vLy9cXFxfXC8vXFwvLy8vLy8vX19fICAKICAgICAgIF9cL1xcXF9fX19fX1wvL1xcXF9fXC8vXFxcXFxcXFxcXF9fX19cLy9cXFxfX19fX19cLy9cXFxcXFxcXFxcX1wvXFxcX19fX19fX19fXy9cXFxcXFxcXFxcX19cLy9cXFxcXFxcXFxcXyAKICAgICAgICBfXC8vL19fX19fX19fXC8vL19fX19cLy8vLy8vLy8vL19fX19fX1wvLy9fX19fX19fX1wvLy8vLy8vLy8vX19cLy8vX19fX19fX19fX1wvLy8vLy8vLy8vX19fX1wvLy8vLy8vLy8vX18="
-Reverse_paylaod = base64.b64decode(Reverse_base64).decode()
-Network_base64 = "X18vXFxcXFxfX19fXy9cXFxfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18gICAgICAgIAogX1wvXFxcXFxcX19fXC9cXFxfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXy9cXFxfX19fX19fX18gICAgICAgCiAgX1wvXFxcL1xcXF9fXC9cXFxfX19fX19fX19fX19fX19fX19fXy9cXFxfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXC9cXFxfX19fX19fX18gICAgICAKICAgX1wvXFxcLy9cXFxfXC9cXFxfX19fXy9cXFxcXFxcXF9fXy9cXFxcXFxcXFxcXF9fL1xcX19fXy9cXF9fXy9cXF9fX19fL1xcXFxcX19fX18vXFwvXFxcXFxcXF9fXC9cXFxcXFxcXF9fX18gICAgIAogICAgX1wvXFxcXC8vXFxcXC9cXFxfX18vXFxcLy8vLy9cXFxfXC8vLy9cXFwvLy8vX19cL1xcXF9fL1xcXFxfL1xcXF9fXy9cXFwvLy9cXFxfX1wvXFxcLy8vLy9cXFxfXC9cXFwvLy8vXFxcX18gICAgCiAgICAgX1wvXFxcX1wvL1xcXC9cXFxfXy9cXFxcXFxcXFxcXF9fX19fXC9cXFxfX19fX19cLy9cXFwvXFxcXFwvXFxcX19fL1xcXF9fXC8vXFxcX1wvXFxcX19fXC8vL19fXC9cXFxcXFxcXC9fX18gICAKICAgICAgX1wvXFxcX19cLy9cXFxcXFxfXC8vXFwvLy8vLy8vX19fX19fXC9cXFxfL1xcX19fXC8vXFxcXFwvXFxcXFxfX19cLy9cXFxfXy9cXFxfX1wvXFxcX19fX19fX19fXC9cXFwvLy9cXFxfX18gIAogICAgICAgX1wvXFxcX19fXC8vXFxcXFxfX1wvL1xcXFxcXFxcXFxfX19fXC8vXFxcXFxfX19fX1wvL1xcXFwvL1xcXF9fX19fXC8vL1xcXFxcL19fX1wvXFxcX19fX19fX19fXC9cXFxfXC8vL1xcXF8gCiAgICAgICAgX1wvLy9fX19fX1wvLy8vL19fX19cLy8vLy8vLy8vL19fX19fX1wvLy8vL19fX19fX19cLy8vX19cLy8vX19fX19fX19cLy8vLy9fX19fX1wvLy9fX19fX19fX19fXC8vL19fX19cLy8vX18="
-Network_paylaod = base64.b64decode(Network_base64).decode()
-Crypto_base64 = "X19fX19fX18vXFxcXFxcXFxcX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18gICAgICAgIAogX19fX18vXFxcLy8vLy8vLy9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18gICAgICAgCiAgX19fL1xcXC9fX19fX19fX19fX19fX19fX19fX19fX19fX19fL1xcXF9fL1xcXF9fXy9cXFxcXFxcXFxfX19fX18vXFxcX19fX19fX19fX19fX19fX19fX18gICAgICAKICAgX18vXFxcX19fX19fX19fX19fX18vXFwvXFxcXFxcXF9fX19cLy9cXFwvXFxcX19fL1xcXC8vLy8vXFxcX18vXFxcXFxcXFxcXFxfX19fXy9cXFxcXF9fX18gICAgIAogICAgX1wvXFxcX19fX19fX19fX19fX1wvXFxcLy8vLy9cXFxfX19fXC8vXFxcXFxfX19cL1xcXFxcXFxcXFxfX1wvLy8vXFxcLy8vL19fX18vXFxcLy8vXFxcX18gICAgCiAgICAgX1wvL1xcXF9fX19fX19fX19fX1wvXFxcX19fXC8vL19fX19fX1wvL1xcXF9fX19cL1xcXC8vLy8vL19fX19fX1wvXFxcX19fX19fXy9cXFxfX1wvL1xcXF8gICAKICAgICAgX19cLy8vXFxcX19fX19fX19fX1wvXFxcX19fX19fX19fXy9cXF8vXFxcX19fX19cL1xcXF9fX19fX19fX19fX1wvXFxcXy9cXF9fXC8vXFxcX18vXFxcX18gIAogICAgICAgX19fX1wvLy8vXFxcXFxcXFxcX1wvXFxcX19fX19fX19fXC8vXFxcXC9fX19fX19cL1xcXF9fX19fX19fX19fX1wvL1xcXFxcX19fX1wvLy9cXFxcXC9fX18gCiAgICAgICAgX19fX19fX1wvLy8vLy8vLy9fX1wvLy9fX19fX19fX19fX1wvLy8vX19fX19fX19cLy8vX19fX19fX19fX19fX19cLy8vLy9fX19fX19fXC8vLy8vX19fX18="
-Forensic_paylaod = base64.b64decode(Forensic_base64).decode()
-Osint_paylaod = "X19fX19fXy9cXFxcXF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fICAgICAgICAKIF9fX19fL1xcXC8vL1xcXF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXyAgICAgICAKICBfX18vXFxcL19fXC8vL1xcXF9fX19fX19fX19fX19fX18vXFxcX19fX19fX19fX19fX19fX19fXy9cXFxfX19fX18gICAgICAKICAgX18vXFxcX19fX19fXC8vXFxcX18vXFxcXFxcXFxcXF9cLy8vX19fL1xcL1xcXFxcXF9fX18vXFxcXFxcXFxcXFxfICAgICAKICAgIF9cL1xcXF9fX19fX19cL1xcXF9cL1xcXC8vLy8vL19fXy9cXFxfXC9cXFwvLy8vXFxcX19cLy8vL1xcXC8vLy9fXyAgICAKICAgICBfXC8vXFxcX19fX19fL1xcXF9fXC9cXFxcXFxcXFxcX1wvXFxcX1wvXFxcX19cLy9cXFxfX19fXC9cXFxfX19fX18gICAKICAgICAgX19cLy8vXFxcX18vXFxcX19fX1wvLy8vLy8vL1xcXF9cL1xcXF9cL1xcXF9fX1wvXFxcX19fX1wvXFxcXy9cXF9fICAKICAgICAgIF9fX19cLy8vXFxcXFwvX19fX19fL1xcXFxcXFxcXFxfXC9cXFxfXC9cXFxfX19cL1xcXF9fX19cLy9cXFxcXF9fXyAKICAgICAgICBfX19fX19cLy8vLy9fX19fX19fXC8vLy8vLy8vLy9fX1wvLy9fX1wvLy9fX19fXC8vL19fX19fX1wvLy8vL19fX18="
+IV = random.randbytes(16)
 
 
-print()
+payload = """X18vXFxcX19fX19fXy9cXFxfX19fX19fXy9cXFxcXF9fX19fX19fX18vXFxcXFxcXFxcX19fX19fXy9cXFxcXFxcXFxcXFxcXFxfX18vXFxcXFxcXFxcXFxcX19fXyAgICAgICAgDQogX1wvLy9cXFxfX18vXFxcL19fX19fX18vXFxcLy8vXFxcX19fX19fL1xcXC8vLy8vLy9cXFxfX19fXC9cXFwvLy8vLy8vLy8vL19fX1wvXFxcLy8vLy8vLy9cXFxfXyAgICAgICANCiAgX19fXC8vL1xcXFxcXC9fX19fX19fL1xcXC9fX1wvLy9cXFxfX19cL1xcXF9fX19fXC9cXFxfX19fXC9cXFxfX19fX19fX19fX19fX1wvXFxcX19fX19fXC8vXFxcXyAgICAgIA0KICAgX19fX19cLy9cXFxcX19fX19fX18vXFxcX19fX19fXC8vXFxcX19cL1xcXFxcXFxcXFxcL19fX19fXC9cXFxcXFxcXFxcXF9fX19fX1wvXFxcX19fX19fX1wvXFxcXyAgICAgDQogICAgX19fX19fXC9cXFxcX19fX19fX1wvXFxcX19fX19fX1wvXFxcX19cL1xcXC8vLy8vL1xcXF9fX19fXC9cXFwvLy8vLy8vX19fX19fX1wvXFxcX19fX19fX1wvXFxcXyAgICANCiAgICAgX19fX19fL1xcXFxcXF9fX19fX1wvL1xcXF9fX19fXy9cXFxfX19cL1xcXF9fX19cLy9cXFxfX19fXC9cXFxfX19fX19fX19fX19fX1wvXFxcX19fX19fX1wvXFxcXyAgIA0KICAgICAgX19fXy9cXFwvLy8vXFxcX19fX19cLy8vXFxcX18vXFxcX19fX19cL1xcXF9fX19fXC8vXFxcX19fXC9cXFxfX19fX19fX19fX19fX1wvXFxcX19fX19fXy9cXFxfXyAgDQogICAgICAgX18vXFxcL19fX1wvLy9cXFxfX19fX1wvLy9cXFxcXC9fX19fX19cL1xcXF9fX19fX1wvL1xcXF9fXC9cXFxcXFxcXFxcXFxcXFxfX1wvXFxcXFxcXFxcXFxcL19fXyANCiAgICAgICAgX1wvLy9fX19fX19fXC8vL19fX19fX19fXC8vLy8vX19fX19fX19cLy8vX19fX19fX19cLy8vX19fXC8vLy8vLy8vLy8vLy8vL19fX1wvLy8vLy8vLy8vLy9fX19fXw=="""
+block_len = 16
+block_list = []
 
-while put == 0:
-    print("ez")
+#======================STYLE======================#
+print("\n")
+print(base64.b64decode(payload).decode())
+print("\n")
+#======================STYLE======================#
+
+#======================GET KEY======================#
+def get_key():
+    password = args.password.encode()
+    md5 = hashlib.md5(password).hexdigest()
+    key = bytes.fromhex(md5).decode("latin1")
+    print(key)
+    if len(key) != 16:
+        print("error when set password")
+        exit()
+    print(f"generated key : {key}")
+    return key.encode()
+#======================GET KEY======================#
+#=======================GET DATA=======================#
+def get_data():
+    if args.message:
+        data = args.message.encode()
+        return data
+    elif args.file:
+        with open(args.file, 'rb') as file:
+            data = file.read()
+        return data
+    else:
+        print("You need to specify a message (-m | --message) or file (-f | --file), use (-h | --help)")
+        print("Error when set the data")
+        exit()
+#=======================GET DATA=======================#
+def xor(block1, block2):
+    block_list = []
+    for i in range(len(block1)):
+        block_list.append(block1[i] ^ block2[i])
+    return bytes(block_list)
+def chiffrement(data: bytes):
+    iv = IV
+    data_encrypt = iv
+    padding = 0
+    for i in range(0, len(data), block_len):
+        block = data[i:i + block_len]
+        if len(block) != block_len:
+            padding = block_len - len(block)
+            data_padding = chr(padding).encode()
+            print(data_padding)
+            print(ord(data_padding))
+            for i in range(padding):
+                block = block + random.randbytes(1)
+        block_xor = xor(block, iv)
+        block_encrypt = xor(block_xor, password)
+        data_encrypt += block_encrypt
+        iv = block_encrypt
+    return data_encrypt + data_padding
+def dechiffrement(data_encrypt):
+    block_len = 16
+    iv = data_encrypt[:block_len]
+    padding = data_encrypt[-1]
+    data_encrypt = data_encrypt[:-1]
+    block_encrypt = data_encrypt[block_len:]
+    data_decrypt = b""
+    for i in range(0, len(block_encrypt), block_len):
+        block = block_encrypt[i:i + block_len]
+        block_xor = xor(block, password)
+        block_decrypt = xor(block_xor, iv)
+        data_decrypt += block_decrypt
+        iv = block
+    return data_decrypt[:-padding]
+
+    parser = argparse.ArgumentParser()
+parser.add_argument('-f', '--file', dest='file', help="File to encrypt or decrypt")
+parser.add_argument('-m', '--message', dest='message', help="Message to encrypt or decrypt")
+parser.add_argument('-d', '--decrypt', dest='decrypt', action='store_true', help='Decrypt message or file in XOR with CBC')
+parser.add_argument('-e', '--encrypt', dest='encrypt', action='store_true', help='Encrypt message or file in XOR with CBC')
+parser.add_argument('-p', '--password', dest='password', required=True, help='Password to encrypt or decrypt the data')
+parser.add_argument('-o', '--output', dest='output', required=True, help='Output file after using the tool')
+args = parser.parse_args()
+
+#========DATA & PASSWORD========#
+password = get_key()
+data = get_data()
+#========DATA & PASSWORD========#
+
+if args.message and args.file:
+    print("You can't use file (-f | --file) and message (-m | --message) in the same time, use (-h | --help)")
+
+elif not args.message and not args.file:
+    print("You need to specify a message (-m | --message) or file (-f | --file), use (-h | --help)")
+
+if args.decrypt and args.encrypt:
+    print("You can't decrypt (-d | --decrypt) and encrypt (-e | --encrypt) in the same time, use (-h | --help)")
     exit()
-if put == 1:
-    print(base64.b64decode(Forensic_paylaod).decode())
-    print('''\nWhat do you want ?
-    [1] Tools
-    [2] Lists
-    [0] Back
-    ''')
-    put = int(input("> "))
 
+elif args.encrypt:
+    result = chiffrement(data)
 
+elif args.decrypt:
+    result = dechiffrement(data)
 
-
-
-
-
-
-#parser = argparse.ArgumentParser()
-#parser.add_argument("-a")
-#agrs = parser.parse_args()
+else:
+    print("You need to encrypt (-e | --encrypt) or decrypt (-d | --decrypt) your data, use (-h | --help)")
+    exit()
+#=============================OUPUT============================#
+print(args.output)
+if args.output:
+    if result:
+        with open(args.output, 'wb') as output:
+            output.write(result)
+            print(f"file save as {args.output}")
+else:
+    print("You need to specify an output (-o | --outpout)")
+#=============================OUPUT============================#
