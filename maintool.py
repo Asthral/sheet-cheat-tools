@@ -61,12 +61,12 @@ print(f"\n{Main_payload}")
 
 # initialisation input
 inp_categorie = 1
-inp_choice = 1
 
 while 0 <= inp_categorie < len(categorie):
     print(f'\nEnter a number between 1-8 :\n')
     print(*categorie, sep="\n")
 
+    inp_choice = 1
     inp_categorie = int(input("> "))
     print(payload[inp_categorie])
 
