@@ -71,9 +71,9 @@ while 0 <= inp_categorie < len(categorie):
     print(payload[inp_categorie])
 
     while 0 < inp_choice < len(choice):
-        data = inp_categorie[1]
+        #data = inp_categorie[1]
         print('\nWhat do you want ?\n')
-        print(choice)
+        print(*choice, sep="\n")
         inp_choice = int(input("> "))
 
 #parser = argparse.ArgumentParser()
